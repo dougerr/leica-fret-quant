@@ -5,7 +5,7 @@ FRET Ratio 伪彩图的色阶图例（LUT colorbar）。
 与 per_fov_imaging.py 共用同一套 colormap 与固定标尺（默认 0–0.6），
 产出的图例可直接放在 per_fov 伪彩图旁边当 legend 用。
 
-标签用英文 + Times New Roman（论文同款，且避免 matplotlib 中文字体缺失导致乱码）。
+标签用英文 + Times New Roman（出版级，且避免 matplotlib 中文字体缺失导致乱码）。
 
 用法：
   python plot_ratio_colorbar.py [--ratio-max 0.6] [--out fret_ratio_colorbar.png]
@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from matplotlib.colors import LinearSegmentedColormap
 
-# ★ 必须与 per_fov_imaging.py 的 FRET_CMAP 完全一致（从论文图采样的锚点）
+# ★ 必须与 per_fov_imaging.py 的 FRET_CMAP 完全一致（逐像素采样锚点）
 FRET_CMAP = LinearSegmentedColormap.from_list("fret", [
     (0.00, (11/255, 226/255, 251/255)),
     (0.25, (10/255, 249/255, 210/255)),
@@ -41,9 +41,9 @@ def main():
     ap.add_argument("--formats", default="png", help="逗号分隔：png,tif")
     ap.add_argument("--step", type=float, default=0.1, help="刻度间隔")
     ap.add_argument("--orientation", default="horizontal", choices=["horizontal", "vertical"],
-                    help="horizontal=横版带刻度；vertical=竖版论文样式（裸色条，无边框无刻度无文字）")
+                    help="horizontal=横版带刻度；vertical=竖版版式风格（裸色条，无边框无刻度无文字）")
     ap.add_argument("--ticks", action="store_true",
-                    help="竖版时附加刻度数字（论文原版没有，默认关）")
+                    help="竖版时附加刻度数字（原始图版没有，默认关）")
     ap.add_argument("--bg", default="white", choices=["white", "black"],
                     help="背景色：black 用于直接拼到黑底伪彩图旁")
     ap.add_argument("--no-title", action="store_true", help="不画标题")
@@ -63,7 +63,7 @@ def main():
     high_c = "#993C1D" if args.bg == "white" else "#F0997B"
 
     if args.orientation == "vertical":
-        # 论文实测样式：裸竖条，宽高比 ≈ 1:6，上=高(橙红) 下=低(青蓝)，
+        # 实测样式：裸竖条，宽高比 ≈ 1:6，上=高(橙红) 下=低(青蓝)，
         # 无边框、无刻度线、无数字（--ticks 可加）。
         w = 0.95 if args.ticks else 0.50
         h = 2.20 if args.ticks else 2.10

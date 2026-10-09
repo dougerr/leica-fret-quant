@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-论文版式逐细胞 FRET 统计图（灰柱+黑点 / 空心圆散点，论文常见样式）。
+出版级逐细胞 FRET 统计图（灰柱+黑点 / 空心圆散点，常见样式）。
 
 输入：analyze_cells_flat.py 产出的 fret_per_cell.csv 与 fret_per_fov.csv
 输出：左 FOV 级灰柱+黑点图 + 右 细胞级空心圆散点图
 
 用法：
-  python plot_cells_thesis_style.py --per-cell fret_per_cell.csv --per-fov fret_per_fov.csv \
-      [--out fret_cells_thesis_style.png] [--metric FRETN_cell]
+  python plot_cells_style.py --per-cell fret_per_cell.csv --per-fov fret_per_fov.csv \
+      [--out fret_cells_style.png] [--metric FRETN_cell]
 
 产物落位：--out 不指定时，PNG 落在 --per-cell 同目录（即原始数据目录），方便原地查找。
 """
@@ -20,7 +20,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-# ---- 论文样式常量（从 PDF 逐像素采样） ----
+# ---- 版式常量（从 PDF 逐像素采样） ----
 RED = "#E94A50"      # 红（光照/实验）RGB≈(233,74,80)
 BLUE = "#3938D5"     # 蓝（黑暗/对照）RGB≈(57,56,213)
 GRAY_BAR = "#96969B" # 柱状图灰填充 RGB≈(150,150,155)
@@ -45,7 +45,7 @@ def main():
     if not args.out:
         # 默认落回原始数据目录（与 fret_per_cell.csv 同夹），方便原地查找
         args.out = os.path.join(os.path.dirname(os.path.abspath(args.per_cell)),
-                                "fret_cells_thesis_style.png")
+                                "fret_cells_style.png")
 
     dfc = pd.read_csv(args.per_cell, encoding="utf-8-sig")
     dff = pd.read_csv(args.per_fov, encoding="utf-8-sig")

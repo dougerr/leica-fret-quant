@@ -32,7 +32,7 @@ from scipy import ndimage
 from matplotlib.colors import LinearSegmentedColormap
 from PIL import Image, ImageDraw, ImageFont
 
-# 与 per_fov_imaging.py 完全一致的锚点（从论文图采样的锚点）
+# 与 per_fov_imaging.py 完全一致的锚点（逐像素采样锚点）
 FRET_CMAP = LinearSegmentedColormap.from_list("fret", [
     (0.00, (11/255, 226/255, 251/255)),
     (0.25, (10/255, 249/255, 210/255)),
@@ -180,7 +180,7 @@ def main():
                          "（两两比对时右侧参照组不画）；none=全部不画")
     ap.add_argument("--row-labels", default="Acceptor,Donor / BFP,FRET Ratio")
     ap.add_argument("--bg", default="white", choices=["white", "black"],
-                    help="画布背景：论文页面为白底（面板自身仍是黑的）")
+                    help="画布背景：图版页面为白底（面板自身仍是黑的）")
     ap.add_argument("--no-labels", action="store_true",
                     help="不画行标签与组标题（组信息由文件名承担），色条仅保留 0.6/0.0 刻度")
     ap.add_argument("--out", default="", help="输出 PNG 路径（默认数据目录下 fret_images_3panel_grid.png）")
@@ -299,8 +299,8 @@ def main():
             panels[prefix] = (acc, don, rat, um_per_px(chm[3]))
             print(f"  {prefix}: crop@({y},{x})  细胞px={int(mask.sum())}")
 
-    # ---- 版式常量（论文同款比例：页面白底、面板黑、色条 ≈ 面板高 70% / 宽 12%） ----
-    gs = max(3, P // 55)          # 组内面板间隙（论文为细白缝）
+    # ---- 版式常量（出版级比例：页面白底、面板黑、色条 ≈ 面板高 70% / 宽 12%） ----
+    gs = max(3, P // 55)          # 组内面板间隙（细白缝）
     gg_ = max(18, P // 8)         # 组间隙
     if args.no_labels:
         label_w = int(P * 0.06)   # 只留窄边距
@@ -313,8 +313,8 @@ def main():
     bot = int(P * 0.10)
     margin_x = int(P * 0.06)
     margin_y = int(P * 0.05)
-    cb_w = max(8, int(P * 0.12))          # 论文实测 13/107 ≈ 0.12
-    cb_h = int(P * 0.70)                  # 论文实测 75/107 ≈ 0.70
+    cb_w = max(8, int(P * 0.12))          # 实测 13/107 ≈ 0.12
+    cb_h = int(P * 0.70)                  # 实测 75/107 ≈ 0.70
     fg = (0, 0, 0) if args.bg == "white" else (255, 255, 255)
     f_title = load_font(max(14, int(P * 0.135)))
     f_label = load_font(max(13, int(P * 0.125)))
@@ -328,7 +328,7 @@ def main():
         return w, h
 
     def render_block(blk, W, H):
-        """blk = [(组标题, [prefix...]), ...]；返回论文样式图（白底、黑面板、细白缝）。"""
+        """blk = [(组标题, [prefix...]), ...]；返回版式风格图（白底、黑面板、细白缝）。"""
         img = Image.new("RGB", (W, H), (255, 255, 255) if args.bg == "white" else (0, 0, 0))
         dr = ImageDraw.Draw(img)
         x0, y_off = margin_x, margin_y
@@ -360,7 +360,7 @@ def main():
         if not args.no_labels:
             for ri, lab in enumerate(row_labels):
                 dr.text((x0, y_rows[ri] + P / 2), lab, font=f_label, fill=fg, anchor="lm")
-        # 竖色条：Ratio 行右端（论文样式：无外框，右侧标 0.6 / 0.0）
+        # 竖色条：Ratio 行右端（版式风格：无外框，右侧标 0.6 / 0.0）
         cb_x = (x0 + label_w + len(blk) * gw + (len(blk) - 1) * gg_ + int(P * 0.06))
         cb_y = y_rows[2] + (P - cb_h) // 2
         # ★ 数组行数必须等于 cb_h：paste 不会缩放，直接用 512 行会超出画布、裁掉青色端
@@ -413,7 +413,7 @@ def main():
                     fname = f"fret_compare_{g}_{t0}_{cn}_vs_{pw}_{t0}_{cn}"
                 save_fig(blk, fname)
     elif args.split:
-        # 每组单独一张：3 行 × n_fov 列 + 一个色条（论文左/右半边那种单块）
+        # 每组单独一张：3 行 × n_fov 列 + 一个色条（左/右半边那种单块）
         print("\n=== 分组出图 ===")
         for title, prefixes in groups:
             slug = re.sub(r"[^0-9A-Za-z]+", "_", title).strip("_")

@@ -23,7 +23,7 @@ An Agent Skills package that turns a reproducible FRET quantification pipeline (
 | `analyze_fret.py` | 子目录布局批量定量（每样本一个子目录） |
 | `analyze_cells_flat.py` | 逐细胞定量（供体 Otsu 分割 → 面积过滤 → 单细胞统计） |
 | `plot_fret_5group.py` | 多构建 × 4 条件柱状图 + 右轴光暗比折线 |
-| `plot_cells_thesis_style.py` | 论文版式统计图（FOV 灰柱+黑点 / 细胞空心圆散点） |
+| `plot_cells_style.py` | 出版级统计图（FOV 灰柱+黑点 / 细胞空心圆散点） |
 | `per_fov_imaging.py` | 每视野伪彩成像图（Acceptor 红 / Donor 蓝 / Ratio 渐变）+ 原始灰度 TIF 打包 |
 | `plot_ratio_colorbar.py` | FRET Ratio 色阶图例（0–0.6） |
 | `plot_images_3panel_grid.py` | 三行组图（受体 / 供体 / Ratio），用于图版排版 |
@@ -117,7 +117,7 @@ leica-fret-quant/
 ├── scripts/                        # 可执行脚本
 ├── references/
 │   ├── metrics_and_pitfalls.md     # 指标口径、通道映射、命名约定、QC、踩坑清单
-│   └── thesis_style_figures.md     # 论文版式统计图实测规范
+│   └── figure_style_spec.md        # 出版级统计图规范
 ├── requirements.txt
 ├── CITATION.cff
 └── LICENSE
@@ -127,8 +127,8 @@ leica-fret-quant/
 
 - 指标定义、通道映射、命名解析规则、QC 阈值、伪彩成像算法口径与历史踩坑，
   全部记录在 [`references/metrics_and_pitfalls.md`](references/metrics_and_pitfalls.md)。
-- 论文版式统计图的配色常量与坐标轴规范（从论文 PDF 逐像素采样）见
-  [`references/thesis_style_figures.md`](references/thesis_style_figures.md)。
+- 出版级统计图的配色常量与坐标轴规范（从目标图版 逐像素采样）见
+  [`references/figure_style_spec.md`](references/figure_style_spec.md)。
 - **PR 欢迎**：如果你的命名约定或显微系统与默认不同，改 `parse_*()` 与标尺参数后提 PR。
 
 ## 引用 / Citation

@@ -2,7 +2,7 @@
 name: leica-fret-quant
 display_name: FRET 定量分析（徕卡共聚焦 · 光暗对照）
 display_name_en: FRET Quantification (Leica Confocal, Light/Dark)
-description: 批量定量分析徕卡共聚焦 FRET 敏化发射图像（BFP 供体 / 敏化发射双通道，LAS X 导出），支持「每样本一个子目录」与「所有视野通道平铺一夹」两种数据布局；用于光照 vs 黑暗分组的 FOV 级与逐细胞 FRET 定量、条件解析、统计对比、发表级柱状图绘制、按视野生成伪彩成像图打包，以及论文同款统计图（灰柱黑点 + 空心圆散点）。核心指标 FRETN = Xia 归一化（S_fg / sqrt(D_fg × A_fg)）。触发词：FRET 定量、FRETN、光暗比、光暗对照、光控 FRET、光遗传学 FRET、敏化发射、徕卡 TIF、逐细胞 FRET、伪彩 FRET 成像。
+description: 批量定量分析徕卡共聚焦 FRET 敏化发射图像（BFP 供体 / 敏化发射双通道，LAS X 导出），支持「每样本一个子目录」与「所有视野通道平铺一夹」两种数据布局；用于光照 vs 黑暗分组的 FOV 级与逐细胞 FRET 定量、条件解析、统计对比、发表级柱状图绘制、按视野生成伪彩成像图打包，以及出版级统计图（灰柱黑点 + 空心圆散点）。核心指标 FRETN = Xia 归一化（S_fg / sqrt(D_fg × A_fg)）。触发词：FRET 定量、FRETN、光暗比、光暗对照、光控 FRET、光遗传学 FRET、敏化发射、徕卡 TIF、逐细胞 FRET、伪彩 FRET 成像。
 description_zh: 对徕卡共聚焦导出的 FRET 敏化发射双通道图像做批量定量：解析光照/黑暗分组做光暗对照统计，输出 FOV 级与逐细胞三指标 CSV（含 FRETN 光暗比与 Mann-Whitney U 检验），并绘制发表级柱状图与伪彩成像图。
 description_en: Batch quantification of Leica confocal sensitized-emission FRET images with light/dark comparison. Parses light/dark groups, computes FOV-level and per-cell FRET indices (FRETN normalized), exports statistical CSVs, publication-grade bar charts, and per-FOV pseudo-color imaging.
 category: data-analysis
@@ -16,7 +16,7 @@ agent_created: true
 对徕卡共聚焦导出的敏化发射 FRET 图像做批量定量：读取三通道（供体 / 敏化发射 / 受体）、
 按命名规则解析实验条件（基因型 / 光照 / 类型 / 视野）、计算三个 FRET 指标、QC、
 输出逐视野与分组汇总 CSV，并绘制「多构建 × 4 条件柱状图 + 右轴光暗比折线」；
-另支持按视野生成论文同款伪彩成像图（伪彩 TIF + 原始灰度 TIF 同夹打包）。
+另支持按视野生成出版级伪彩成像图（伪彩 TIF + 原始灰度 TIF 同夹打包）。
 
 ## 何时使用
 
@@ -25,7 +25,7 @@ agent_created: true
 - 需要每个视野的成像图副本：Acceptor 红、Donor 蓝、FRET Ratio 渐变（绝对标尺 0–0.6），
   与原始灰度 TIF 打包在同一文件夹。
 - 需要逐细胞分辨率的定量与统计（`analyze_cells_flat.py`）。
-- 需要论文同款统计图：灰柱 + 黑点（FOV 级）与空心圆散点 + mean±SD 灰线（细胞级）。
+- 需要出版级统计图：灰柱 + 黑点（FOV 级）与空心圆散点 + mean±SD 灰线（细胞级）。
 
 ## 通道与指标（先确认，勿猜）
 
@@ -89,7 +89,7 @@ agent_created: true
    显著偏离 1 的构建才是有光控响应（结合阴性对照——序列阴性对照与不响应光控的对照构建——
    判断光开关本身是否工作）。
 
-6. **逐细胞定量**（平铺布局，需要单细胞分辨率统计 / 论文版式散点图时）：
+6. **逐细胞定量**（平铺布局，需要单细胞分辨率统计 / 出版级散点图时）：
    ```bash
    python scripts/analyze_cells_flat.py --base "数据目录" [--out-dir 输出目录] [--min-area 300 --max-area 20000]
    ```
@@ -98,10 +98,10 @@ agent_created: true
    `fret_per_fov.csv`（逐 FOV 中位数）、`fret_cells_dark_vs_light.csv`
    （细胞级 + FOV 级 Mann-Whitney U 对比）。注意细胞级统计存在伪重复，FOV 级列为对照。
 
-7. **论文版式统计图**（规范见 references/thesis_style_figures.md）：
+7. **出版级统计图**（规范见 references/figure_style_spec.md）：
    ```bash
    # 左 FOV 灰柱+黑点 / 右 细胞空心圆散点（红=光照、蓝=黑暗），mean±SD 灰线
-   python scripts/plot_cells_thesis_style.py --per-cell fret_per_cell.csv --per-fov fret_per_fov.csv
+   python scripts/plot_cells_style.py --per-cell fret_per_cell.csv --per-fov fret_per_fov.csv
    ```
 
 ## 依赖环境
@@ -120,7 +120,7 @@ agent_created: true
   + 原始灰度 TIF 同夹打包 + zip；`--colorbar` 可在 per_fov 根目录附带 `_colorbar.png` 色阶图例。
 - `scripts/plot_ratio_colorbar.py` — FRET Ratio 色阶图例（LUT colorbar，0–0.6），
   与伪彩图共用同一 colormap。`--orientation horizontal`（横版带刻度，默认）/
-  `vertical`（竖版论文样式：裸色条 1:6，无边框无刻度无文字，`--ticks` 可加数字，
+  `vertical`（竖版版式风格：裸色条 1:6，无边框无刻度无文字，`--ticks` 可加数字，
   `--bg black` 用于直接拼黑底伪彩图）。竖版实测宽高比 14:84，上=橙红(高) 下=青(低)。
 - `scripts/plot_images_3panel_grid.py` — 三行组图（受体红 / 供体蓝 / Ratio 伪彩；
   `--bg white` 白底页面+黑面板+细白缝，`--bg black` 可选）。组标题带下划线、行标签居左
@@ -136,8 +136,8 @@ agent_created: true
   ★ 注意 PIL paste 不缩放：竖色条数组行数必须等于目标高度 cb_h。
 - `scripts/analyze_cells_flat.py` — 逐细胞定量（供体 Otsu 分割→面积过滤→逐细胞三指标
   + 细胞级 / FOV 级 dark vs light 对比）。
-- `scripts/plot_cells_thesis_style.py` — 论文版式统计图（FOV 灰柱+黑点 / 细胞空心圆散点）。
+- `scripts/plot_cells_style.py` — 出版级统计图（FOV 灰柱+黑点 / 细胞空心圆散点）。
 - `references/metrics_and_pitfalls.md` — 指标数学定义、通道映射、两种布局命名约定、QC 规则、
   伪彩成像算法口径与配色锚点、历史踩坑清单；需要深入理解口径或排查异常时读取。
-- `references/thesis_style_figures.md` — 论文版式统计图实测规范（配色常量、柱状图 / 散点图元素、
-  坐标轴与字体、Y 轴自适应规则）；绘制论文同款图前读取。
+- `references/figure_style_spec.md` — 出版级统计图规范（配色常量、柱状图 / 散点图元素、
+  坐标轴与字体、Y 轴自适应规则）；绘制出版级图前读取。

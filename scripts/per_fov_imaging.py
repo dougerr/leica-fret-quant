@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-每视野伪彩成像图 + 原始灰度图打包（论文同款观感）。
+每视野伪彩成像图 + 原始灰度图打包（出版级观感）。
 
 对平铺目录（所有视野所有通道混在一个文件夹）按视野生成：
 
@@ -26,9 +26,9 @@
   2) 基准通道默认 donor（--base-channel acceptor 可切）：受体亮/供体弱的细胞
      D≈背景时 S/D 被除法放大出假高值（实测虚高至 0.76，正常细胞仅 0.07），
      以 donor 作明度可自动压暗这类不可信区域；如需与受体行完全同貌选 acceptor。
-  3) 色阶固定 0–0.6（论文常用标尺，不随视野自适应）；--brightness 控整体明暗
+  3) 色阶固定 0–0.6（固定标尺，不随视野自适应）；--brightness 控整体明暗
      （默认 0.65，实测 0.8 偏亮）。
-  4) Ratio 用原始 S/D（LAS X 口径，不做背景扣除）——与论文图的呈像口径一致。
+  4) Ratio 用原始 S/D（LAS X 口径，不做背景扣除）——与原始导出图的成像口径一致。
      定量结论一律走 CSV 的 FRETN，不要从这张伪彩图读数。
 
 命名兼容（两种批次都支持）：
@@ -50,7 +50,7 @@ import tifffile
 from matplotlib.colors import LinearSegmentedColormap
 from scipy.ndimage import gaussian_filter
 
-# 从论文图采样的锚点：0=青 → 1=红
+# 逐像素采样锚点：0=青 → 1=红
 FRET_CMAP = LinearSegmentedColormap.from_list("fret", [
     (0.00, (11/255, 226/255, 251/255)),
     (0.25, (10/255, 249/255, 210/255)),
@@ -167,7 +167,7 @@ def main():
     ap.add_argument("--zip-name", default="per_fov.zip", help="相对 base 下的 zip 文件名")
     ap.add_argument("--no-zip", action="store_true", help="只生成 per_fov 目录，不打包 zip")
     ap.add_argument("--rename", default="", help='标注替换，如 "S3=S1"（仅改 TIFF description 标注）')
-    ap.add_argument("--ratio-max", type=float, default=0.6, help="FRET Ratio 固定标尺上限（论文同款 0.6）")
+    ap.add_argument("--ratio-max", type=float, default=0.6, help="FRET Ratio 固定标尺上限（固定 0.6）")
     ap.add_argument("--sigma", type=float, default=1.0, help="三通道平滑强度（0=不平滑）")
     ap.add_argument("--base-channel", default="donor", choices=["donor", "acceptor"],
                     help="Ratio 图明度基准通道：donor（默认，无除法伪影）/ acceptor（与受体行同貌）")
