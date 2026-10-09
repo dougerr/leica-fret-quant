@@ -1,0 +1,35 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ---- 分析产物（脚本默认写在数据目录，这里兜底） ----
+fret_fov.csv
+fret_condition_summary.csv
+fret_dark_vs_light.csv
+fret_per_cell.csv
+fret_per_fov.csv
+fret_cells_dark_vs_light.csv
+per_fov/
+per_fov.zip
+
+# ---- 显微图像数据（永不入库） ----
+*.tif
+*.tiff
+*.lif
+*.czi
+*.nd2
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

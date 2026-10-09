@@ -1,0 +1,11 @@
+# 核心数据处理
+numpy
+pandas
+scipy
+
+# 图像读取（徕卡 8-bit LZW 压缩 TIF 必需）
+tifffile
+imagecodecs
+
+# 出图
+matplotlib

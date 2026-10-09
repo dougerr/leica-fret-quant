@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+title: "leica-fret-quant: Leica Confocal FRET Quantification with Light/Dark Comparison"
+abstract: >-
+  Batch quantification of Leica confocal sensitized-emission FRET images with
+  light/dark comparison.
+  Parses light/dark groups, computes FOV-level and per-cell FRET indices
+  (including FRETN normalization), exports statistical CSVs, publication-grade
+  bar charts, and per-FOV pseudo-color imaging with original grayscale TIFFs.
+type: software
+authors:
+  - alias: "豆ger"
+version: 1.0.0
+date-released: 2026-10-09
+license: MIT
+repository-code: "https://github.com/dougerr/leica-fret-quant"
+keywords:
+  - FRET
+  - FRETN
+  - confocal microscopy
+  - Leica
+  - image quantification
+  - optogenetics
+  - light/dark comparison
+  - agent skills
