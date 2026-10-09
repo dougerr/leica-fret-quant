@@ -135,6 +135,13 @@ leica-fret-quant/
 
 见 [`CITATION.cff`](CITATION.cff)。如果在论文中使用本工具，请引用本仓库。
 
+## 更新日志 / Changelog
+
+| 版本 | 日期 | 变化 |
+|---|---|---|
+| `1.0.1` | 2026-10-09 | 专业表述规范化：全篇「论文版式统计图」统一为「出版级统计图」；样式规范文件更名为 `references/figure_style_spec.md`，统计图脚本更名为 `scripts/plot_cells_style.py`。**功能与 1.0.0 完全一致**（脚本参数、输出文件名、算法、依赖均未改动） |
+| `1.0.0` | 2026-10-09 | 首个发布版本 |
+
 ## 许可 / License
 
 [MIT](LICENSE) © 2026 豆ger

@@ -6,7 +6,7 @@ description: 批量定量分析徕卡共聚焦 FRET 敏化发射图像（BFP 供
 description_zh: 对徕卡共聚焦导出的 FRET 敏化发射双通道图像做批量定量：解析光照/黑暗分组做光暗对照统计，输出 FOV 级与逐细胞三指标 CSV（含 FRETN 光暗比与 Mann-Whitney U 检验），并绘制发表级柱状图与伪彩成像图。
 description_en: Batch quantification of Leica confocal sensitized-emission FRET images with light/dark comparison. Parses light/dark groups, computes FOV-level and per-cell FRET indices (FRETN normalized), exports statistical CSVs, publication-grade bar charts, and per-FOV pseudo-color imaging.
 category: data-analysis
-version: 1.0.0
+version: 1.0.1
 author: 豆ger
 agent_created: true
 ---
