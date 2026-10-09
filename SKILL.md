@@ -120,7 +120,7 @@ agent_created: true
   + 原始灰度 TIF 同夹打包 + zip；`--colorbar` 可在 per_fov 根目录附带 `_colorbar.png` 色阶图例。
 - `scripts/plot_ratio_colorbar.py` — FRET Ratio 色阶图例（LUT colorbar，0–0.6），
   与伪彩图共用同一 colormap。`--orientation horizontal`（横版带刻度，默认）/
-  `vertical`（竖版版式风格：裸色条 1:6，无边框无刻度无文字，`--ticks` 可加数字，
+  `vertical`（竖版紧凑样式：裸色条 1:6，无边框无刻度无文字，`--ticks` 可加数字，
   `--bg black` 用于直接拼黑底伪彩图）。竖版实测宽高比 14:84，上=橙红(高) 下=青(低)。
 - `scripts/plot_images_3panel_grid.py` — 三行组图（受体红 / 供体蓝 / Ratio 伪彩；
   `--bg white` 白底页面+黑面板+细白缝，`--bg black` 可选）。组标题带下划线、行标签居左

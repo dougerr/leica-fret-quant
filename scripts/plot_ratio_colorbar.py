@@ -41,7 +41,7 @@ def main():
     ap.add_argument("--formats", default="png", help="逗号分隔：png,tif")
     ap.add_argument("--step", type=float, default=0.1, help="刻度间隔")
     ap.add_argument("--orientation", default="horizontal", choices=["horizontal", "vertical"],
-                    help="horizontal=横版带刻度；vertical=竖版版式风格（裸色条，无边框无刻度无文字）")
+                    help="horizontal=横版带刻度；vertical=竖版紧凑样式（裸色条，无边框无刻度无文字）")
     ap.add_argument("--ticks", action="store_true",
                     help="竖版时附加刻度数字（原始图版没有，默认关）")
     ap.add_argument("--bg", default="white", choices=["white", "black"],

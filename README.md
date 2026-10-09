@@ -127,7 +127,7 @@ leica-fret-quant/
 
 - 指标定义、通道映射、命名解析规则、QC 阈值、伪彩成像算法口径与历史踩坑，
   全部记录在 [`references/metrics_and_pitfalls.md`](references/metrics_and_pitfalls.md)。
-- 出版级统计图的配色常量与坐标轴规范（从目标图版 逐像素采样）见
+- 出版级统计图的配色常量与坐标轴规范（从目标图版逐像素采样）见
   [`references/figure_style_spec.md`](references/figure_style_spec.md)。
 - **PR 欢迎**：如果你的命名约定或显微系统与默认不同，改 `parse_*()` 与标尺参数后提 PR。
 
